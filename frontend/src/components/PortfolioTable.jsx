@@ -12,7 +12,7 @@ export default function PortfolioTable() {
     const fetchCMP = async () => {
       const updated = await Promise.all(
         stocks.map(async (s) => {
-          const res = await axios.get(`http://localhost:5000/api/cmp/${s.symbol}`);
+          const res = await axios.get(`// https://portfolio-dashboard-160m.onrender.com/api/portfolio`);
           return { ...s, cmp: res.data.cmp, currency: res.data.currency };
         })
       );
