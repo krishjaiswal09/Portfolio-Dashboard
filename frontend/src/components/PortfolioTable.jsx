@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { TrendingUp, TrendingDown, Filter, ChevronDown } from "lucide-react";
-import { formatCurrency, formatNumber } from "../../utils/formatters.js";
+import { formatCurrency, formatNumber } from "../utils/formatters";
 
 const PortfolioTable = ({ portfolioData, portfolioStats }) => {
   const [selectedSector, setSelectedSector] = useState("Financial Sector");

@@ -1,9 +1,9 @@
 import React from "react";
 import { usePortfolioData } from "./hooks/usePortfolioData.jsx";
-import DashboardHeader from "./components/dashboard/DashboardHeader.jsx";
-import PortfolioSummary from "./components/dashboard/PortfolioSummary.jsx";
-import SectorSummary from "./components/dashboard/SectorSummary.jsx";
-import PortfolioTable from "./components/dashboard/PortfolioTable.jsx";
+import DashboardHeader from "./components/DashboardHeader.jsx";
+import PortfolioSummary from "./components/PortfolioSummary.jsx";
+import SectorSummary from "./components/SectorSummary.jsx";
+import PortfolioTable from "./components/PortfolioTable.jsx";
 
 const App = () => {
   // Get all the portfolio data and functions

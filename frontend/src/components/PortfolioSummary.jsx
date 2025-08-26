@@ -1,6 +1,6 @@
 import React from "react";
 import { TrendingUp, TrendingDown, DollarSign, BarChart3 } from "lucide-react";
-import { formatCurrency } from "../../utils/formatters.js";
+import { formatCurrency } from "../utils/formatters";
 
 const SummaryCard = ({ title, value, icon: Icon, isProfit = null }) => {
   const textColor =

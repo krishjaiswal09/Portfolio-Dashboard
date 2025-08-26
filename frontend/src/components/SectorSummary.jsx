@@ -1,5 +1,5 @@
 import React from "react";
-import { formatCurrency } from "../../utils/formatters.js";
+import { formatCurrency } from "../utils/formatters";
 
 const SectorSummary = ({ sectorSummaries }) => {
   if (!sectorSummaries || !Object.keys(sectorSummaries).length) return null;

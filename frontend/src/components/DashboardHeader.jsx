@@ -1,6 +1,6 @@
 import React from 'react';
 import { PieChart, RefreshCw } from 'lucide-react';
-import { formatTime } from '../../utils/formatters.js';
+import { formatTime } from '../utils/formatters';
 
 const DashboardHeader = ({ lastUpdated, refreshing, onRefresh }) => {
   return (
