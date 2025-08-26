@@ -96,5 +96,6 @@ flowchart TD
     style Error fill:#ffcdd2
 ```
 
-⚠️ **Important:** The project might take a while to load initially, depending on your network and environment.
+⚠️ **Important:** The project might take a while to load initially.
+
 
