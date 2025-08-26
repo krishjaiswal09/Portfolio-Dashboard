@@ -30,10 +30,14 @@ This dashboard fetches CMP, P/E ratios, and latest earnings using APIs built fro
 git clone https://github.com/your-username/portfolio-dashboard.git
 cd portfolio-dashboard
 
-# Install dependencies
+# Backend setup
+cd backend
 npm install
+npm start
 
-# Start the development server
+# Frontend setup
+cd ../frontend
+npm install
 npm run dev
 ```
 
@@ -54,35 +58,40 @@ npm run dev
 
 ```mermaid
 flowchart TD
-    A[API Endpoint<br/>portfolio-dashboard-6o9w.onrender.com/api/portfolio] --> B[usePortfolioData Hook]
-    B --> C[Raw Portfolio Data<br/>Array of stocks with basic fields]
-    C --> D[enhancePortfolioData<br/>Calculate investment, present value, gain/loss]
-    D --> E[Enhanced Portfolio Data<br/>+ investment, presentValue, gainLoss, sector]
-    E --> F[calculatePortfolioStats<br/>Sum totals & add portfolio percentages]
-    E --> G[calculateSectorSummaries<br/>Group by sector & calculate totals]
-    F --> H[Portfolio Stats<br/>Total investment, present value, gain/loss]
-    G --> I[Sector Summaries<br/>Per-sector totals & stock counts]
-    B --> J[App Component<br/>Main orchestrator]
-    J -->|loading state| K[Loading Screen]
-    J -->|error state| L[Error Screen with retry]
-    J -->|portfolioStats| M[PortfolioSummary<br/>3 summary cards]
-    J -->|sectorSummaries| N[SectorSummary<br/>Sector breakdown table]
-    J -->|portfolioData + portfolioStats| O[PortfolioTable<br/>Detailed stock table with sector filter]
-    J -->|lastUpdated + refreshing + onRefresh| P[DashboardHeader<br/>Title & refresh button]
-    M --> Q[Dashboard UI<br/>Gradient background layout]
-    N --> Q
-    O --> Q
-    P --> Q
-    B -.->|Auto-refresh every 15s| A
-    B -.->|Manual refresh via header| A
-    L -.->|Try again button| A
-    style A fill:#e1f5fe
-    style Q fill:#f3e5f5
-    style B fill:#fff3e0
-    style J fill:#ffecb3
-    style D fill:#e8f5e8
-    style F fill:#e8f5e8
-    style G fill:#e8f5e8
-    style K fill:#ffcdd2
-    style L fill:#ffcdd2
+    API[API Endpoint<br/>portfolio-dashboard-6o9w.onrender.com/api/portfolio] --> Hook[usePortfolioData Hook]
+    Hook --> RawData[Raw Portfolio Data<br/>Array of stocks with basic fields]
+    RawData --> Enhance[enhancePortfolioData<br/>Calculate investment, present value, gain/loss]
+    Enhance --> Enhanced[Enhanced Portfolio Data<br/>+ investment, presentValue, gainLoss, sector]
+    Enhanced --> Stats[calculatePortfolioStats<br/>Totals & portfolio %]
+    Enhanced --> SectorCalc[calculateSectorSummaries<br/>Group by sector & totals]
+
+    Stats --> PortfolioSummary[PortfolioSummary Component<br/>3 summary cards]
+    SectorCalc --> SectorSummary[SectorSummary Component<br/>Sector breakdown table]
+    Enhanced --> PortfolioTable[PortfolioTable Component<br/>Detailed stock table with sector filter]
+    Hook --> App[App Component<br/>Main orchestrator]
+    App -->|loading| Loading[Loading Screen]
+    App -->|error| Error[Error Screen with retry]
+    App -->|portfolioStats| PortfolioSummary
+    App -->|sectorSummaries| SectorSummary
+    App -->|portfolioData + portfolioStats| PortfolioTable
+    App -->|lastUpdated + refreshing + onRefresh| Header[DashboardHeader<br/>Title & refresh button]
+
+    PortfolioSummary --> Dashboard[Dashboard UI<br/>Gradient background layout]
+    SectorSummary --> Dashboard
+    PortfolioTable --> Dashboard
+    Header --> Dashboard
+
+    Hook -.->|Auto-refresh every 15s| API
+    Hook -.->|Manual refresh via header| API
+    Error -.->|Try again| API
+
+    style API fill:#e1f5fe
+    style Dashboard fill:#f3e5f5
+    style Hook fill:#fff3e0
+    style App fill:#ffecb3
+    style Enhance fill:#e8f5e8
+    style Stats fill:#e8f5e8
+    style SectorCalc fill:#e8f5e8
+    style Loading fill:#ffcdd2
+    style Error fill:#ffcdd2
 ```
