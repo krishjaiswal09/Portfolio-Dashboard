@@ -6,16 +6,14 @@ const PortfolioTable = ({ portfolioData, portfolioStats }) => {
   const [selectedSector, setSelectedSector] = useState("Financial Sector");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-  const stocks = portfolioStats.dataWithPortfolioPercent || portfolioData;
-  
-  if (!stocks.length) {
+const stocks = portfolioStats.dataWithPortfolioPercent || portfolioData;
+
+  if(!stocks || stocks.length === 0){
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="bg-white rounded-xl shadow-sm border p-6">
-          <p className="text-gray-600">No portfolio data available.</p>
-        </div>
+      <div className="min-h-[200px] flex items-center justify-center bg-white rounded-xl shadow-sm border">
+        <p className="text-gray-600">No Portfolio data available.</p>
       </div>
-    );
+    )
   }
 
   const sectors = [...new Set(stocks.map(stock => stock.sector).filter(Boolean))].sort();
@@ -75,7 +73,7 @@ const PortfolioTable = ({ portfolioData, portfolioStats }) => {
               <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Exchange</th>
               <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">CMP</th>
               <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Present Value</th>
-              <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Gain/Loss</th>
+              <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">Gain/Loss</th>
               <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">P/E Ratio</th>
               <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase">Latest Earnings</th>
             </tr>
@@ -98,20 +96,13 @@ const PortfolioTable = ({ portfolioData, portfolioStats }) => {
                     <span className="text-xs ml-1">({stock.gainLossPercent}%)</span>
                   </div>
                 </td>
-                <td className="px-4 py-4 text-right text-gray-600">{stock.peRatio || "N/A"}</td>
+                <td className="px-4 py-4 text-right text-gray-600">{stock.peRatio ? Number(stock.peRatio).toFixed(2) : "N/A"}</td>
                 <td className="px-4 py-4 text-right text-gray-600">{stock.latestEarnings || "N/A"}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-
-      {/* No results message */}
-      {filteredStocks.length === 0 && (
-        <div className="text-center py-12">
-          <p className="text-gray-500">No stocks found for the selected filter.</p>
-        </div>
-      )}
     </div>
   );
 };
