@@ -95,7 +95,6 @@ flowchart TD
     style Loading fill:#ffcdd2
     style Error fill:#ffcdd2
 ```
-```
+
 ⚠️ **Important:** The project might take a while to load initially, depending on your network and environment.
 
-```
