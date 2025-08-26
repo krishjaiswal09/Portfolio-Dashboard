@@ -1,8 +1,9 @@
 import React from 'react';
 import { PieChart, RefreshCw } from 'lucide-react';
-import { formatTime } from '../utils/formatters';
 
 const DashboardHeader = ({ lastUpdated, refreshing, onRefresh }) => {
+  const formatTime = (date) => date.toLocaleTimeString();
+
   return (
     <div className="bg-white shadow-sm border-b">
       <div className="max-w-7xl mx-auto px-4 py-6">

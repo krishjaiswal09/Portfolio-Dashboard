@@ -1,6 +1,5 @@
 import React from "react";
 import { TrendingUp, TrendingDown, DollarSign, BarChart3 } from "lucide-react";
-import { formatCurrency } from "../utils/formatters";
 
 const SummaryCard = ({ title, value, icon: Icon, isProfit = null }) => {
   const textColor =
@@ -33,6 +32,14 @@ const SummaryCard = ({ title, value, icon: Icon, isProfit = null }) => {
 };
 
 const PortfolioSummary = ({ portfolioStats }) => {
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+      maximumFractionDigits: 0
+    }).format(amount);
+  };
+
   if (!portfolioStats.totalInvestment) return null;
 
   const isProfit = portfolioStats.totalGainLoss >= 0;

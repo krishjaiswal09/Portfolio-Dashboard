@@ -1,12 +1,23 @@
 import React, { useState } from "react";
 import { TrendingUp, TrendingDown, Filter, ChevronDown } from "lucide-react";
-import { formatCurrency, formatNumber } from "../utils/formatters";
 
 const PortfolioTable = ({ portfolioData, portfolioStats }) => {
   const [selectedSector, setSelectedSector] = useState("Financial Sector");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-const stocks = portfolioStats.dataWithPortfolioPercent;
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+      maximumFractionDigits: 0
+    }).format(amount);
+  };
+
+  const formatNumber = (number) => {
+    return new Intl.NumberFormat('en-IN').format(number);
+  };
+
+  const stocks = portfolioStats.dataWithPortfolioPercent;
 
   if(!stocks || stocks.length === 0){
     return (

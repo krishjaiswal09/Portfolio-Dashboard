@@ -1,7 +1,14 @@
 import React from "react";
-import { formatCurrency } from "../utils/formatters";
 
 const SectorSummary = ({ sectorSummaries }) => {
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+      maximumFractionDigits: 0
+    }).format(amount);
+  };
+
   if (!sectorSummaries || !Object.keys(sectorSummaries).length) return null;
 
   return (
