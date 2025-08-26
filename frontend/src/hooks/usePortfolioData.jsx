@@ -36,7 +36,6 @@ export const usePortfolioData = () => {
 
       // Make sure we got an array
       if (!Array.isArray(data)) {
-        console.error("API returned non-array data:", data);
         throw new Error("Invalid data format received from API");
       }
 
@@ -49,8 +48,7 @@ export const usePortfolioData = () => {
           item.purchasePrice !== null &&
           item.quantity !== null &&
           item.cmp !== null &&
-          !item.particulars.includes("Sector") && 
-          !item.particulars.includes("Others")
+          !item.particulars.includes("Sector")  
       );
 
       const enhancedData = enhancePortfolioData(cleanData);

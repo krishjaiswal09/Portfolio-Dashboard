@@ -6,7 +6,7 @@ const PortfolioTable = ({ portfolioData, portfolioStats }) => {
   const [selectedSector, setSelectedSector] = useState("Financial Sector");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-const stocks = portfolioStats.dataWithPortfolioPercent || portfolioData;
+const stocks = portfolioStats.dataWithPortfolioPercent;
 
   if(!stocks || stocks.length === 0){
     return (

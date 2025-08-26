@@ -1,25 +1,24 @@
 import { assignSector } from './sectorMapping.js';
 
-// Add extra info to each stock (profit/loss, sector, etc.)
+// Add useful fields to each stock (like profit/loss, sector, % returns)
 export const enhancePortfolioData = (data) => {
   return data.map(stock => {
     const investment = stock.purchasePrice * stock.quantity;
     const presentValue = stock.cmp * stock.quantity;
     const gainLoss = presentValue - investment;
-    const sector = assignSector(stock.particulars);
-    
+
     return {
       ...stock,
       investment,
       presentValue,
       gainLoss,
-      sector,
-      gainLossPercent: ((gainLoss / investment) * 100).toFixed(2)
+      sector: assignSector(stock.particulars),
+      gainLossPercent: ((gainLoss / investment) * 100).toFixed(2),
     };
   });
 };
 
-// Calculate total portfolio numbers
+// Get overall portfolio stats (totals + portfolio % for each stock)
 export const calculatePortfolioStats = (portfolioData) => {
   if (!portfolioData.length) return {};
 
@@ -28,35 +27,31 @@ export const calculatePortfolioStats = (portfolioData) => {
   const totalGainLoss = totalPresentValue - totalInvestment;
   const totalGainLossPercent = ((totalGainLoss / totalInvestment) * 100).toFixed(2);
 
-  // Add percentage of total portfolio for each stock
-  const dataWithPortfolioPercent = portfolioData.map(stock => ({
-    ...stock,
-    portfolioPercent: ((stock.investment / totalInvestment) * 100).toFixed(2)
-  }));
-
   return {
     totalInvestment,
     totalPresentValue,
     totalGainLoss,
     totalGainLossPercent,
-    dataWithPortfolioPercent
+    dataWithPortfolioPercent: portfolioData.map(stock => ({
+      ...stock,
+      portfolioPercent: ((stock.investment / totalInvestment) * 100).toFixed(2),
+    })),
   };
 };
 
-// Group stocks by sector and calculate sector totals
+// Break portfolio down by sector (totals + gain/loss per sector)
 export const calculateSectorSummaries = (portfolioData) => {
   if (!portfolioData.length) return {};
 
   const sectors = {};
-  
-  // Group all stocks by their sector
+
   portfolioData.forEach(stock => {
     if (!sectors[stock.sector]) {
       sectors[stock.sector] = {
         investment: 0,
         presentValue: 0,
         gainLoss: 0,
-        stocks: []
+        stocks: [],
       };
     }
     sectors[stock.sector].investment += stock.investment;
@@ -65,9 +60,7 @@ export const calculateSectorSummaries = (portfolioData) => {
     sectors[stock.sector].stocks.push(stock);
   });
 
-  // Calculate gain/loss percentage for each sector
-  Object.keys(sectors).forEach(sector => {
-    const sectorData = sectors[sector];
+  Object.values(sectors).forEach(sectorData => {
     sectorData.gainLossPercent = ((sectorData.gainLoss / sectorData.investment) * 100).toFixed(2);
   });
 
