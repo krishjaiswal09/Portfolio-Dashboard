@@ -53,26 +53,36 @@ npm run dev
 ### Data Flow
 
 ```mermaid
-flowchart LR
-    API[API Endpoint\nportfolio-dashboard-6o9w.onrender.com/api/portfolio] --> Hook[usePortfolioData Hook]
-    Hook --> RawData[Raw Portfolio Data\nArray of stocks with basic fields]
-    RawData --> Enhance[enhancePortfolioData\nCalculate investment, present value, gain/loss]
-    Enhance --> EnhancedData[Enhanced Portfolio Data\n+ investment, presentValue, gainLoss, sector]
-    EnhancedData --> Stats[calculatePortfolioStats\nSum totals & add portfolio percentages]
-    EnhancedData --> SectorSummaryCalc[calculateSectorSummaries\nGroup by sector & calculate totals]
-    Stats --> PortfolioSummary[PortfolioSummary Component\n3 summary cards]
-    EnhancedData --> PortfolioTable[PortfolioTable Component\nDetailed stock table with sector filter]
-    SectorSummaryCalc --> SectorSummaryComp[SectorSummary Component\nSector breakdown table]
-    PortfolioSummary --> Dashboard[Dashboard UI]
-    PortfolioTable --> Dashboard
-    SectorSummaryComp --> Dashboard
-    Header[DashboardHeader\nTitle & refresh button] --> Dashboard
-    Hook -.->|Auto-refresh every 15s| API
-    Hook -.->|Manual refresh| API
-    style API fill:#e1f5fe
-    style Dashboard fill:#f3e5f5
-    style Hook fill:#fff3e0
-    style Enhance fill:#e8f5e8
-    style Stats fill:#e8f5e8
-    style SectorSummaryCalc fill:#e8f5e8
+flowchart TD
+    A[API Endpoint<br/>portfolio-dashboard-6o9w.onrender.com/api/portfolio] --> B[usePortfolioData Hook]
+    B --> C[Raw Portfolio Data<br/>Array of stocks with basic fields]
+    C --> D[enhancePortfolioData<br/>Calculate investment, present value, gain/loss]
+    D --> E[Enhanced Portfolio Data<br/>+ investment, presentValue, gainLoss, sector]
+    E --> F[calculatePortfolioStats<br/>Sum totals & add portfolio percentages]
+    E --> G[calculateSectorSummaries<br/>Group by sector & calculate totals]
+    F --> H[Portfolio Stats<br/>Total investment, present value, gain/loss]
+    G --> I[Sector Summaries<br/>Per-sector totals & stock counts]
+    B --> J[App Component<br/>Main orchestrator]
+    J -->|loading state| K[Loading Screen]
+    J -->|error state| L[Error Screen with retry]
+    J -->|portfolioStats| M[PortfolioSummary<br/>3 summary cards]
+    J -->|sectorSummaries| N[SectorSummary<br/>Sector breakdown table]
+    J -->|portfolioData + portfolioStats| O[PortfolioTable<br/>Detailed stock table with sector filter]
+    J -->|lastUpdated + refreshing + onRefresh| P[DashboardHeader<br/>Title & refresh button]
+    M --> Q[Dashboard UI<br/>Gradient background layout]
+    N --> Q
+    O --> Q
+    P --> Q
+    B -.->|Auto-refresh every 15s| A
+    B -.->|Manual refresh via header| A
+    L -.->|Try again button| A
+    style A fill:#e1f5fe
+    style Q fill:#f3e5f5
+    style B fill:#fff3e0
+    style J fill:#ffecb3
+    style D fill:#e8f5e8
+    style F fill:#e8f5e8
+    style G fill:#e8f5e8
+    style K fill:#ffcdd2
+    style L fill:#ffcdd2
 ```
