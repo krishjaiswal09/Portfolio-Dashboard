@@ -21,7 +21,7 @@ This dashboard fetches CMP, P/E ratios, and latest earnings using APIs built fro
 * **Frontend:** React, TypeScript, Vite, Shadcn-UI
 * **Backend:** Node.js, Express (hosted on Render)
 * **Styling:** Tailwind CSS
-* **APIs:** Custom APIs using Yahoo Finance and Google Finance
+* **APIs:** Custom APIs using Yahoo Finance 
 
 ### Installation
 
@@ -97,5 +97,6 @@ flowchart TD
 ```
 
 ⚠️ **Important:** The project might take a while to load initially.
+
 
 
