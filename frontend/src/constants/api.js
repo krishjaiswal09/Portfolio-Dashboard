@@ -1,5 +1,5 @@
 export const API = {
-  BASE_URL: "https://portfolio-dashboard-6o9w.onrender.com",
+  BASE_URL: "http://localhost:5000",
   REFRESH_INTERVAL: 15000, // 15 seconds
 };
 

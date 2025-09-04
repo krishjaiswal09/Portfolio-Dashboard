@@ -67,10 +67,9 @@ async function getLiveStockData(nseCode) {
     });
 
     return {
-      cmp: data.price.regularMarketPrice,
-      peRatio:
-        data.summaryDetail?.trailingPE || data.defaultKeyStatistics?.trailingPE,
-      latestEarning: data.defaultKeyStatistics?.trailingEps,
+      cmp: data.price?.regularMarketPrice || null,
+      peRatio: data.summaryDetail?.trailingPE || data.defaultKeyStatistics?.trailingPE || null,
+      latestEarning: data.defaultKeyStatistics?.trailingEps || null,
     };
   } catch (error) {
     console.error(`Error fetching ${nseCode}: ${error.message}`);
